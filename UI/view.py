@@ -36,10 +36,27 @@ class View:
         self.txt_titolo = ft.Text(value="Biblioteche di Torino", size=38, weight=ft.FontWeight.BOLD)
 
         # --- Sezione 2: Filtraggio ---
-        # TODO
+        self.dd_biblioteca = ft.Dropdown(
+            label="Biblioteca",
+            hint_text="Seleziona una biblioteca",
+            on_select=self.seleziona_biblioteca,
+            width=300
+        )
+
+        self.dd_genere = ft.Dropdown(
+            label="Genere",
+            hint_text="Seleziona un genere",
+            on_select=self.seleziona_genere,
+            width=300
+        )
 
         # Sezione 3: Libri
-        # TODO
+        self.btn_mostra_libri = ft.Button(
+            content=ft.Text("Mostra Libri"),
+            on_click=self.mostra_libri
+        )
+
+        self.lv_libri = ft.ListView(expand=1, spacing=10, padding=10)
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -53,10 +70,14 @@ class View:
             ft.Divider(),
 
             # Sezione 2: Filtraggio
-            # TODO
+            ft.Row(
+                [self.dd_biblioteca, self.dd_genere],
+                alignment=ft.MainAxisAlignment.CENTER
+            ),
 
             # Sezione 3: Libri
-            # TODO
+            self.btn_mostra_libri,
+            self.lv_libri,
         )
 
         self.page.scroll = "adaptive"
@@ -67,3 +88,15 @@ class View:
         self.page.theme_mode = ft.ThemeMode.DARK if self.toggle_cambia_tema.value else ft.ThemeMode.LIGHT
         self.toggle_cambia_tema.label = "Tema scuro" if self.toggle_cambia_tema.value else "Tema chiaro"
         self.page.update()
+
+    def seleziona_biblioteca(self, e):
+        if self.controller:
+            self.controller.handle_selezione_biblioteca(e)
+
+    def seleziona_genere(self, e):
+        if self.controller:
+            self.controller.handle_selezione_genere(e)
+
+    def mostra_libri(self, e):
+        if self.controller:
+            self.controller.handle_mostra_libri(e)
