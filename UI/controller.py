@@ -14,8 +14,8 @@ class Controller:
         self._view = view
 
         # Variabili per memorizzare le selezioni correnti
-        self.biblioteca_selezionata = None
-        self.genere_selezionato = None
+        self._biblioteca_selezionata = None
+        self._genere_selezionato = None
 
     # POPOLA DROPDOWN
     def popola_dropdown(self):
